@@ -1,30 +1,74 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_portfolio/model/navigation_item.dart';
+import 'package:flutter_portfolio/pages/about.dart';
 import 'package:flutter_portfolio/pages/home.dart';
+import 'package:flutter_portfolio/widgets/custom_nav_bar.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatefulWidget {
+  const App({super.key});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  int selectedPage = 0;
+  List<NavigationItem> navigationItems = [
+    NavigationItem(0, "Home", const HomePage()),
+    NavigationItem(1, "About", const AboutPage()),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: '_',
-      theme: null,
-      darkTheme: ThemeData(
-        primarySwatch: buildMaterialColor(const Color.fromARGB(0xFF, 0x1F, 0x1E, 0x22)),
-        textTheme: const TextTheme(
-          bodySmall: TextStyle(color: Colors.white),
-          bodyMedium: TextStyle(color: Colors.white),
-          bodyLarge: TextStyle(color: Colors.white),
+    return DefaultTabController(
+      length: 3,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: '_',
+        theme: null,
+        darkTheme: ThemeData(
+            primarySwatch: buildMaterialColor(
+                const Color.fromARGB(0xFF, 0x1F, 0x1E, 0x22)),
+            textTheme: const TextTheme(
+              bodySmall: TextStyle(color: Colors.white),
+              bodyMedium: TextStyle(color: Colors.white),
+              bodyLarge: TextStyle(color: Colors.white),
+            ),
+            iconTheme: const IconThemeData(color: Colors.white)),
+        themeMode: ThemeMode.dark,
+        home: Builder(
+          builder: (context) {
+            return Scaffold(
+              appBar: customNavigationBar(
+                  context,
+                  navigationItems,
+                  selectedPage,
+                  (value) => setState(
+                        () {
+                          selectedPage = value;
+                        },
+                      )),
+              body: Container(
+                color: Theme.of(context).colorScheme.primary,
+                height: double.infinity,
+                width: double.infinity,
+                child: getPage(selectedPage),
+              ),
+            );
+          },
         ),
-        iconTheme: const IconThemeData(color: Colors.white)
       ),
-      themeMode: ThemeMode.dark,
-      home: const HomePage(),
     );
+  }
+
+  Widget getPage(int id) {
+    var selectedPage =
+        navigationItems.firstWhere((element) => element.id == id);
+    return selectedPage.widget;
   }
 }
 

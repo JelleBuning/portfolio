@@ -104,13 +104,13 @@ class ThemeSwitchWidget extends StatelessWidget{
     return Switch.adaptive(
       activeColor: Colors.grey[700],
       activeTrackColor: Colors.grey[300],
-
       inactiveThumbColor: Colors.grey[700],
       inactiveTrackColor: Colors.grey,
-      value: themeProvider.isLightMode, 
+      // ! to switch the values around in frontend
+      value: !themeProvider.isDarkMode, 
       onChanged: (value) {
         final provider = Provider.of<ThemeProvider>(context, listen: false);
-        provider.setTheme(value);
+        provider.setTheme(!value);
       },
     );
   }

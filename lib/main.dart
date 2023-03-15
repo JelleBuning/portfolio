@@ -28,7 +28,7 @@ class _AppState extends State<App> {
       length: 3,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: '_',
+        title: 'Jelle Buning',
         theme: null,
         darkTheme: ThemeData(
             primarySwatch: buildMaterialColor(

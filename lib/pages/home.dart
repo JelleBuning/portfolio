@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_portfolio/util/constants.dart';
+
+import '../util/responsive.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,52 +13,56 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Stack
-    (
-      alignment: Alignment.bottomRight,
-      children: [
-        Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              
-              // Introduction
-              Expanded(
-                flex: 3,
-                child: Row(children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white),
-                      ),
-                      child: introductionWidget(),
-                    ),
-                  ),
-                  // Only for alignment
-                  const Expanded(child: SizedBox.shrink()),
-                ]),
-              ),
-      
-              // Content
-              Expanded(
-                flex: 5,
-                child: Row(
-                  children: [
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Constants.OUTSIDE_PADDING),
+      child: Stack(
+        alignment: Alignment.bottomRight,
+        children: [
+          Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                // Introduction
+                Expanded(
+                  flex: 3,
+                  child: Row(children: [
                     Expanded(
+                      flex: Responsive.isSmallScreen(context) ? 100 : 50,
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.white),
                         ),
+                        child: introductionWidget(),
                       ),
                     ),
                     // Only for alignment
-                    const Expanded(child: SizedBox.shrink()),
-                  ],
+                    Expanded(
+                      flex: Responsive.isSmallScreen(context) ? 0 : 50,
+                      child: const SizedBox.shrink()),
+                  ]),
                 ),
-              ),
-            ],
-        ),
-        imageOverlay()
-      ],
+        
+                // Content
+                Expanded(
+                  flex: 5,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      // Only for alignment
+                      const Expanded(child: SizedBox.shrink()),
+                    ],
+                  ),
+                ),
+              ],
+          ),
+          imageOverlay()
+        ],
+      ),
     );
   }
 }

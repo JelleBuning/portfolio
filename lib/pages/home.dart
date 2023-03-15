@@ -25,8 +25,8 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   flex: 3,
                   child: Row(children: [
-                    Expanded(
-                      flex: Responsive.isSmallScreen(context) ? 100 : 50,
+                    Flexible(
+                      flex: Responsive.isSmallScreen(context) ? 100 : Responsive.isMediumScreen(context) ? 75 : 50,
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.white),
@@ -35,8 +35,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     // Only for alignment
-                    Expanded(
-                      flex: Responsive.isSmallScreen(context) ? 0 : 50,
+                    Flexible(
+                      flex: Responsive.isSmallScreen(context) ? 0 : Responsive.isMediumScreen(context) ? 25 : 50,
                       child: const SizedBox.shrink()),
                   ]),
                 ),
@@ -47,6 +47,7 @@ class _HomePageState extends State<HomePage> {
                   child: Row(
                     children: [
                       Expanded(
+                        flex: Responsive.isSmallScreen(context) ? 100 : Responsive.isMediumScreen(context) ? 75 : 50,
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.white),
@@ -54,7 +55,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       // Only for alignment
-                      const Expanded(child: SizedBox.shrink()),
+                      Expanded(
+                        flex: Responsive.isSmallScreen(context) ? 0 : Responsive.isMediumScreen(context) ? 25 : 50,
+                        child: const SizedBox.shrink()
+                      ),
                     ],
                   ),
                 ),

@@ -3,15 +3,14 @@ import 'package:flutter_portfolio/model/navigation_item.dart';
 import 'package:flutter_portfolio/util/constants.dart';
 import 'package:flutter_portfolio/util/responsive.dart';
 import 'package:provider/provider.dart';
-
 import '../util/theme_provider.dart';
-import 'fullscreen_menu.dart';
 
 class CustomNavigationBar extends StatefulWidget with PreferredSizeWidget {
   final BuildContext context;
   final List<NavigationItem> navigationItems;
   final int selectedId;
   final Function(int) callback;
+  final Function(bool) menuCallback;
 
   final Size size = const Size(double.infinity, 80.0);
 
@@ -20,7 +19,8 @@ class CustomNavigationBar extends StatefulWidget with PreferredSizeWidget {
       required this.context,
       required this.navigationItems,
       required this.selectedId,
-      required this.callback});
+      required this.callback,
+      required this.menuCallback});
 
   @override
   State<CustomNavigationBar> createState() => _CustomNavBarState();
@@ -29,8 +29,26 @@ class CustomNavigationBar extends StatefulWidget with PreferredSizeWidget {
   Size get preferredSize => size;
 }
 
-class _CustomNavBarState extends State<CustomNavigationBar> {
+class _CustomNavBarState extends State<CustomNavigationBar>
+    with SingleTickerProviderStateMixin {
   bool isSwitched = false;
+  late AnimationController animationController;
+  bool menuOpen = false;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+        vsync: this,
+        duration:
+            const Duration(milliseconds: Constants.MENU_ANIMATION_DURATION_MS));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    animationController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,31 +84,38 @@ class _CustomNavBarState extends State<CustomNavigationBar> {
       int selectedId,
       Function(int) callback) {
     return IconButton(
+      icon: AnimatedIcon(
+          icon: AnimatedIcons.menu_close, progress: animationController),
       onPressed: () {
-        Navigator.of(context).push(
-          PageRouteBuilder(
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              return SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(0, -1),
-                  end: Offset.zero,
-                ).animate(animation),
-                child: SlideTransition(
-                  position: Tween<Offset>(
-                    begin: Offset.zero,
-                    end: const Offset(0, 0.0),
-                  ).animate(secondaryAnimation),
-                  child: child,
-                ),
-              );
-            },
-            opaque: false,
-            pageBuilder: (BuildContext context, _, __) => FullscreenMenu(
-              size: widget.size,
-            ),
-          ),
-        );
+        toggleicon();
+      },
+    );
+    return IconButton(
+      onPressed: () {
+        // Navigator.of(context).push(
+        //   PageRouteBuilder(
+        //     transitionsBuilder:
+        //         (context, animation, secondaryAnimation, child) {
+        //       return SlideTransition(
+        //         position: Tween<Offset>(
+        //           begin: const Offset(0, -1),
+        //           end: Offset.zero,
+        //         ).animate(animation),
+        //         child: SlideTransition(
+        //           position: Tween<Offset>(
+        //             begin: Offset.zero,
+        //             end: const Offset(0, 0.0),
+        //           ).animate(secondaryAnimation),
+        //           child: child,
+        //         ),
+        //       );
+        //     },
+        //     opaque: false,
+        //     pageBuilder: (BuildContext context, _, __) => FullscreenMenu(
+        //       size: widget.size,
+        //     ),
+        //   ),
+        // );
       },
       icon: const Icon(Icons.menu),
     );
@@ -130,6 +155,14 @@ class _CustomNavBarState extends State<CustomNavigationBar> {
     );
     return Row(children: menuItems);
   }
+
+  void toggleicon() => setState(() {
+        menuOpen = !menuOpen;
+        menuOpen
+            ? animationController.forward()
+            : animationController.reverse();
+        widget.menuCallback(menuOpen);
+      });
 }
 
 class ThemeSwitchWidget extends StatelessWidget {

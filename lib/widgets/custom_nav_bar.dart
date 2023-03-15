@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_portfolio/model/navigation_item.dart';
 import 'package:flutter_portfolio/util/constants.dart';
 import 'package:flutter_portfolio/util/responsive.dart';
+import 'package:provider/provider.dart';
+
+import '../util/theme_provider.dart';
 
 class CustomNavigationBar extends StatefulWidget with PreferredSizeWidget{
   final BuildContext context;
@@ -84,16 +87,32 @@ class _CustomNavBarState extends State<CustomNavigationBar> {
     menuItems.add(
       Padding(
         padding: EdgeInsets.only(left: menuPadding), 
-        child: Switch(
-          activeColor: Colors.amber,
-          value: isSwitched,
-          onChanged: (value) {
-            setState(() {
-              isSwitched = value;
-            });
-        },),
+        child: const ThemeSwitchWidget(),
       ),
     );
     return Row( children: menuItems );
   } 
+}
+
+class ThemeSwitchWidget extends StatelessWidget{
+  const ThemeSwitchWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
+    return Switch.adaptive(
+      activeColor: Colors.grey[700],
+      activeTrackColor: Colors.grey[300],
+
+      inactiveThumbColor: Colors.grey[700],
+      inactiveTrackColor: Colors.grey,
+      value: themeProvider.isLightMode, 
+      onChanged: (value) {
+        final provider = Provider.of<ThemeProvider>(context, listen: false);
+        provider.setTheme(value);
+      },
+    );
+  }
+  
 }

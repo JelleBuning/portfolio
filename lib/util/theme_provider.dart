@@ -4,35 +4,47 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.dark;
+  bool get isLightMode => themeMode == ThemeMode.light;
   bool get isDarkMode => themeMode == ThemeMode.dark;
-  ThemeData? darkTheme;
-  ThemeData? lightTheme = ThemeData();
-
-
   
-  ThemeProvider(bool isDark) {
-      themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
-      darkTheme = ThemeData(
-        primarySwatch: buildMaterialColor(const Color.fromARGB(0xFF, 0x1F, 0x1E, 0x22)),
-        textTheme: const TextTheme(
-          bodySmall: TextStyle(color: Colors.white),
-          bodyMedium: TextStyle(color: Colors.white),
-          bodyLarge: TextStyle(color: Colors.white),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white),
-      );
+  // Themes
+  ThemeData? darkTheme;
+  ThemeData? lightTheme;
+  
+  ThemeProvider(){
+    setThemeMode();
+    darkTheme = ThemeData(
+      primarySwatch: buildMaterialColor(const Color.fromARGB(0xFF, 0x1F, 0x1E, 0x22)),
+      textTheme: const TextTheme(
+        bodySmall: TextStyle(color: Colors.white),
+        bodyMedium: TextStyle(color: Colors.white),
+        bodyLarge: TextStyle(color: Colors.white),
+      ),
+      iconTheme: const IconThemeData(color: Colors.white),
+    );
+
+    lightTheme = ThemeData(
+      primarySwatch: buildMaterialColor(Colors.white),
+      textTheme: const TextTheme(
+        bodySmall: TextStyle(color: Colors.black),
+        bodyMedium: TextStyle(color: Colors.black),
+        bodyLarge: TextStyle(color: Colors.black),
+      ),
+      iconTheme: const IconThemeData(color: Colors.black),
+    );
   }
 
-  void toggleTheme(bool isDark) async {
+  Future<void> setThemeMode() async{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    if(isDark) {
-      themeMode = ThemeMode.dark;
-      sharedPreferences.setBool(Constants.THEME_KEY, true);
-    } else {
-      themeMode = ThemeMode.light;
-      sharedPreferences.setBool(Constants.THEME_KEY, false);
-    }
+    var isDark =  sharedPreferences.getBool(Constants.THEME_KEY);
+    isDark = (isDark == null) ? true : isDark;
+    themeMode = isDark ? ThemeMode.light : ThemeMode.dark;
+  }
 
+  void setTheme(bool isDark) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    themeMode = isDark ? ThemeMode.light : ThemeMode.dark;
+    sharedPreferences.setBool(Constants.THEME_KEY, isDark);
     notifyListeners();
   }
 

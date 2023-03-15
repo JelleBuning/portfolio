@@ -92,5 +92,6 @@ Widget socialMediaWidget(){
 }
 
 Widget imageOverlay(){
-  return Container(width: 400, height: 500);
+  // TODO: set image
+  return const SizedBox(width: 400, height: 500);
 }

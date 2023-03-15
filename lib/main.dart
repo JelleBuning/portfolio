@@ -2,21 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_portfolio/model/navigation_item.dart';
 import 'package:flutter_portfolio/pages/about.dart';
 import 'package:flutter_portfolio/pages/home.dart';
-import 'package:flutter_portfolio/util/constants.dart';
 import 'package:flutter_portfolio/util/theme_provider.dart';
 import 'package:flutter_portfolio/widgets/custom_nav_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async{
-  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  bool? isDark = sharedPreferences.getBool(Constants.THEME_KEY);
-  runApp(App(isDark: (isDark == null) ? true : isDark));
+  runApp(const App());
 }
 
 class App extends StatefulWidget {
-  const App({super.key, required this.isDark});
-  final bool isDark;
+  const App({super.key});
 
   @override
   State<App> createState() => _AppState();
@@ -31,7 +26,7 @@ class _AppState extends State<App> {
   
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
-    create: (context) => ThemeProvider(widget.isDark),
+    create: (context) => ThemeProvider(),
     builder: (context, _) {
       var themeProvider = Provider.of<ThemeProvider>(context);
       return DefaultTabController(

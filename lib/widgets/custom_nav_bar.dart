@@ -12,7 +12,7 @@ class CustomNavigationBar extends StatefulWidget with PreferredSizeWidget {
   final Function(int) callback;
   final Function(bool) menuCallback;
 
-  final Size size = const Size(double.infinity, 80.0);
+  final Size size = const Size(double.infinity, Constants.APPBAR_PREFERRED_SIZE);
 
   CustomNavigationBar(
       {super.key,
@@ -61,7 +61,7 @@ class _CustomNavBarState extends State<CustomNavigationBar>
         color: Theme.of(context).colorScheme.primary,
         child: Padding(
           padding:
-              const EdgeInsets.symmetric(horizontal: Constants.OUTSIDE_PADDING),
+              const EdgeInsets.fromLTRB(Constants.OUTSIDE_PADDING, Constants.STATUSBAR_PADDING, Constants.OUTSIDE_PADDING, 0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -84,40 +84,13 @@ class _CustomNavBarState extends State<CustomNavigationBar>
       int selectedId,
       Function(int) callback) {
     return IconButton(
+      padding: EdgeInsets.zero,
+      constraints: const BoxConstraints(),
       icon: AnimatedIcon(
           icon: AnimatedIcons.menu_close, progress: animationController),
       onPressed: () {
         toggleicon();
       },
-    );
-    return IconButton(
-      onPressed: () {
-        // Navigator.of(context).push(
-        //   PageRouteBuilder(
-        //     transitionsBuilder:
-        //         (context, animation, secondaryAnimation, child) {
-        //       return SlideTransition(
-        //         position: Tween<Offset>(
-        //           begin: const Offset(0, -1),
-        //           end: Offset.zero,
-        //         ).animate(animation),
-        //         child: SlideTransition(
-        //           position: Tween<Offset>(
-        //             begin: Offset.zero,
-        //             end: const Offset(0, 0.0),
-        //           ).animate(secondaryAnimation),
-        //           child: child,
-        //         ),
-        //       );
-        //     },
-        //     opaque: false,
-        //     pageBuilder: (BuildContext context, _, __) => FullscreenMenu(
-        //       size: widget.size,
-        //     ),
-        //   ),
-        // );
-      },
-      icon: const Icon(Icons.menu),
     );
   }
 

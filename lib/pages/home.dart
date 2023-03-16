@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Constants.OUTSIDE_PADDING),
+      padding: const EdgeInsets.fromLTRB(Constants.OUTSIDE_PADDING, Constants.APPBAR_BOTTOM_PADDING, Constants.OUTSIDE_PADDING, 0),
       child: Stack(
         alignment: Alignment.bottomRight,
         children: [

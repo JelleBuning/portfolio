@@ -3,7 +3,8 @@ import 'package:flutter_portfolio/model/navigation_item.dart';
 import 'package:flutter_portfolio/pages/about.dart';
 import 'package:flutter_portfolio/pages/home.dart';
 import 'package:flutter_portfolio/util/theme_provider.dart';
-import 'package:flutter_portfolio/widgets/custom_nav_bar.dart';
+import 'package:flutter_portfolio/widgets/navigation_bar.dart';
+import 'package:flutter_portfolio/widgets/mobile_menu.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -19,7 +20,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> with SingleTickerProviderStateMixin {
   int selectedPage = 0;
-  bool menuOpen = false;
+  bool mobileMenuOpen = false;
   List<NavigationItem> navigationItems = [
     NavigationItem(0, "Home", const HomePage()),
     NavigationItem(1, "About", const AboutPage()),
@@ -47,13 +48,14 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                       context: context,
                       navigationItems: navigationItems,
                       selectedId: selectedPage,
+                      mobileMenuOpen: mobileMenuOpen,
                       callback: (value) => setState(
                         () {
                           selectedPage = value;
                         },
                       ),
                       menuCallback: (value) => setState(() {
-                        menuOpen = value;
+                        mobileMenuOpen = value;
                       }),
                     ),
                     body: Stack(
@@ -64,15 +66,25 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                           width: double.infinity,
                           child: getPage(selectedPage),
                         ),
+                        // Small menu panel
                         AnimatedContainer(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).primaryColorLight,
                           alignment: Alignment.topCenter,
                           width: double.infinity,
-                          height:
-                              menuOpen ? MediaQuery.of(context).size.height : 0,
+                          height: mobileMenuOpen ? MediaQuery.of(context).size.height : 0,
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.fastOutSlowIn,
-                          child: const Center(child: Text("Menu")),
+                          child: mobileMenuOpen ? 
+                          MobileMenu(
+                            navigationItems: navigationItems, 
+                            selectedId: selectedPage, 
+                            callback: (value) => setState(() {
+                                mobileMenuOpen = false;
+                                selectedPage = value;
+                              },
+                            ),
+                          ) 
+                          : null,
                         ),
                       ],
                     ),

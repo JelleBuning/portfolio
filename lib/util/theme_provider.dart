@@ -14,14 +14,24 @@ class ThemeProvider extends ChangeNotifier {
     setThemeMode();
     darkTheme = ThemeData(
       primarySwatch: buildMaterialColor(const Color.fromARGB(0xFF, 0x1F, 0x1E, 0x22)),
-      textTheme: const TextTheme(
-        bodySmall: TextStyle(color: Colors.white),
-        bodyMedium: TextStyle(color: Colors.white),
-        bodyLarge: TextStyle(color: Colors.white),
+      primaryColorLight: buildMaterialColor(const Color.fromARGB(0xF0, 0x1F, 0x1E, 0x22)),
+      textTheme: TextTheme(
+        bodySmall: const TextStyle(color: Colors.white),
+        bodyMedium: const TextStyle(color: Colors.white),
+        bodyLarge: const TextStyle(color: Colors.white),
+        headlineLarge: const TextStyle(
+          color: Colors.amber,
+          fontWeight: FontWeight.w900,
+        ),
+        headlineSmall: TextStyle(
+          color: Colors.grey[300],
+          fontWeight: FontWeight.w300
+        )
       ),
       iconTheme: const IconThemeData(color: Colors.white),
     );
 
+    // TODO: UPDATE
     lightTheme = ThemeData(
       primarySwatch: buildMaterialColor(Colors.white),
       textTheme: const TextTheme(

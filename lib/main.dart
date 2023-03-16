@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_portfolio/model/navigation_item.dart';
 import 'package:flutter_portfolio/pages/about.dart';
 import 'package:flutter_portfolio/pages/home.dart';
-import 'package:flutter_portfolio/util/constants.dart';
 import 'package:flutter_portfolio/util/theme_provider.dart';
-import 'package:flutter_portfolio/widgets/custom_nav_bar.dart';
+import 'package:flutter_portfolio/widgets/navigation_bar.dart';
+import 'package:flutter_portfolio/widgets/mobile_menu.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -20,7 +20,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> with SingleTickerProviderStateMixin {
   int selectedPage = 0;
-  bool menuOpen = false;
+  bool mobileMenuOpen = false;
   List<NavigationItem> navigationItems = [
     NavigationItem(0, "Home", const HomePage()),
     NavigationItem(1, "About", const AboutPage()),
@@ -48,13 +48,14 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                       context: context,
                       navigationItems: navigationItems,
                       selectedId: selectedPage,
+                      mobileMenuOpen: mobileMenuOpen,
                       callback: (value) => setState(
                         () {
                           selectedPage = value;
                         },
                       ),
                       menuCallback: (value) => setState(() {
-                        menuOpen = value;
+                        mobileMenuOpen = value;
                       }),
                     ),
                     body: Stack(
@@ -65,15 +66,25 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                           width: double.infinity,
                           child: getPage(selectedPage),
                         ),
+                        // Small menu panel
                         AnimatedContainer(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).primaryColorLight,
                           alignment: Alignment.topCenter,
                           width: double.infinity,
-                          height:
-                              menuOpen ? MediaQuery.of(context).size.height : 0,
+                          height: mobileMenuOpen ? MediaQuery.of(context).size.height : 0,
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.fastOutSlowIn,
-                          child: menuOpen ? getSmallMenu() : null,
+                          child: mobileMenuOpen ? 
+                          MobileMenu(
+                            navigationItems: navigationItems, 
+                            selectedId: selectedPage, 
+                            callback: (value) => setState(() {
+                                mobileMenuOpen = false;
+                                selectedPage = value;
+                              },
+                            ),
+                          ) 
+                          : null,
                         ),
                       ],
                     ),
@@ -89,77 +100,5 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     var selectedPage =
         navigationItems.firstWhere((element) => element.id == id);
     return selectedPage.widget;
-  }
-
-  Widget getSmallMenu(){
-    return FutureBuilder(
-      future: delayBuild(250),
-      builder: (context, snapshot) {
-        if(snapshot.hasData){
-          return smallMenu();
-        } else {
-          return const SizedBox.shrink();
-        }
-      },
-    );
-  }
-
-  Future<bool> delayBuild(var ms) async{
-    await Future.delayed(Duration(milliseconds: ms));
-    return true;
-  }
-
-  Widget smallMenu() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Constants.OUTSIDE_PADDING),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
-            MenuItem(title: "HOME"),
-            SizedBox(height: 10,),
-            MenuItem(title: "ABOUT"),
-          ],
-        ),
-    );
-  }
-}
-
-class MenuItem extends StatefulWidget {
-  const MenuItem({
-    super.key, required this.title,
-  });
-  final String title;
-
-  @override
-  State<MenuItem> createState() => _MenuItemState();
-}
-
-class _MenuItemState extends State<MenuItem> {
-  bool _hovering = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(3)),
-        border: Border.all(
-          color:  _hovering ? Colors.white : Colors.transparent
-          ),
-        ),
-      child: InkWell(
-        onTap: () {},
-        onHover: (hovering) {
-          setState(() {
-            _hovering = hovering; 
-          });
-        },
-        child: Container(
-          alignment: Alignment.center,
-          width: double.infinity,
-          height: 50,
-          child: Text(widget.title),
-        ),
-      ),
-    );
   }
 }

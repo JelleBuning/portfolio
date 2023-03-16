@@ -11,6 +11,7 @@ class CustomNavigationBar extends StatefulWidget with PreferredSizeWidget {
   final int selectedId;
   final Function(int) callback;
   final Function(bool) menuCallback;
+  final bool mobileMenuOpen;
 
   final Size size = const Size(double.infinity, Constants.APPBAR_PREFERRED_SIZE);
 
@@ -20,7 +21,8 @@ class CustomNavigationBar extends StatefulWidget with PreferredSizeWidget {
       required this.navigationItems,
       required this.selectedId,
       required this.callback,
-      required this.menuCallback});
+      required this.menuCallback, 
+      required this.mobileMenuOpen});
 
   @override
   State<CustomNavigationBar> createState() => _CustomNavBarState();
@@ -31,17 +33,17 @@ class CustomNavigationBar extends StatefulWidget with PreferredSizeWidget {
 
 class _CustomNavBarState extends State<CustomNavigationBar>
     with SingleTickerProviderStateMixin {
-  bool isSwitched = false;
   late AnimationController animationController;
-  bool menuOpen = false;
 
   @override
   void initState() {
     super.initState();
     animationController = AnimationController(
-        vsync: this,
-        duration:
-            const Duration(milliseconds: Constants.MENU_ANIMATION_DURATION_MS));
+      vsync: this,
+      duration: const Duration(
+        milliseconds: Constants.MENU_ANIMATION_DURATION_MS
+      )
+    );
   }
 
   @override
@@ -52,7 +54,7 @@ class _CustomNavBarState extends State<CustomNavigationBar>
 
   @override
   Widget build(BuildContext context) {
-    var menuPadding = 30.0;
+    updateIcon();
 
     return PreferredSize(
       preferredSize: widget.size,
@@ -70,7 +72,7 @@ class _CustomNavBarState extends State<CustomNavigationBar>
                   ? getSmallNavBar(context, widget.navigationItems,
                       widget.selectedId, widget.callback)
                   : getLargeNavBar(context, widget.navigationItems,
-                      widget.selectedId, widget.callback, menuPadding)
+                      widget.selectedId, widget.callback)
             ],
           ),
         ),
@@ -87,7 +89,9 @@ class _CustomNavBarState extends State<CustomNavigationBar>
       padding: EdgeInsets.zero,
       constraints: const BoxConstraints(),
       icon: AnimatedIcon(
-          icon: AnimatedIcons.menu_close, progress: animationController),
+        icon: AnimatedIcons.menu_close, 
+        progress: animationController
+      ),
       onPressed: () {
         toggleicon();
       },
@@ -98,12 +102,11 @@ class _CustomNavBarState extends State<CustomNavigationBar>
       BuildContext context,
       List<NavigationItem> navigationItems,
       int selectedId,
-      Function(int) callback,
-      menuPadding) {
+      Function(int) callback) {
     List<Padding> menuItems = navigationItems
         .map(
           (item) => Padding(
-            padding: EdgeInsets.only(left: menuPadding),
+            padding: const EdgeInsets.only(left: Constants.MENU_PADDING),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                   elevation: 0, shadowColor: Colors.transparent),
@@ -121,23 +124,24 @@ class _CustomNavBarState extends State<CustomNavigationBar>
 
     // Add darkmode switch
     menuItems.add(
-      Padding(
-        padding: EdgeInsets.only(left: menuPadding),
-        child: const ThemeSwitchWidget(),
+      const Padding(
+        padding: EdgeInsets.only(left: Constants.MENU_PADDING),
+        child: ThemeSwitchWidget(),
       ),
     );
     return Row(children: menuItems);
   }
 
   void toggleicon() => setState(() {
-        menuOpen = !menuOpen;
-        menuOpen
-            ? animationController.forward()
-            : animationController.reverse();
-        widget.menuCallback(menuOpen);
+        updateIcon();
+        widget.menuCallback(!widget.mobileMenuOpen);
       });
-}
 
+  void updateIcon() {
+    widget.mobileMenuOpen ? animationController.forward() : animationController.reverse();
+  }
+
+}
 class ThemeSwitchWidget extends StatelessWidget {
   const ThemeSwitchWidget({super.key});
 

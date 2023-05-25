@@ -5,7 +5,7 @@ import 'package:flutter_portfolio/util/responsive.dart';
 import 'package:provider/provider.dart';
 import '../util/theme_provider.dart';
 
-class CustomNavigationBar extends StatefulWidget with PreferredSizeWidget {
+class CustomNavigationBar extends StatefulWidget implements PreferredSizeWidget {
   final BuildContext context;
   final List<NavigationItem> navigationItems;
   final int selectedId;

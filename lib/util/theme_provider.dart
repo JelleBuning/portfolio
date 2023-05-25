@@ -17,7 +17,7 @@ class ThemeProvider extends ChangeNotifier {
       primaryColorLight: buildMaterialColor(const Color.fromARGB(0xF0, 0x1F, 0x1E, 0x22)),
       textTheme: TextTheme(
         bodySmall: const TextStyle(color: Colors.white),
-        bodyMedium: const TextStyle(color: Colors.white),
+        bodyMedium: const TextStyle(color: Colors.grey),
         bodyLarge: const TextStyle(color: Colors.white),
         headlineLarge: const TextStyle(
           color: Colors.amber,

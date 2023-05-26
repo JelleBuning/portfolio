@@ -15,7 +15,7 @@ class CustomNavigationBar extends StatefulWidget implements PreferredSizeWidget 
 
   final Size size = const Size(double.infinity, Constants.APPBAR_PREFERRED_SIZE);
 
-  CustomNavigationBar(
+  const CustomNavigationBar(
       {super.key,
       required this.context,
       required this.navigationItems,
@@ -68,11 +68,10 @@ class _CustomNavBarState extends State<CustomNavigationBar>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text("Title/Logo placeholder"),
-              Responsive.isSmallScreen(context)
+              Responsive.isSmallScreen(context) || Responsive.isMediumScreen(context)
                   ? getSmallNavBar(context, widget.navigationItems,
                       widget.selectedId, widget.callback)
-                  : getLargeNavBar(context, widget.navigationItems,
-                      widget.selectedId, widget.callback)
+                  : getLargeNavBar(context)
             ],
           ),
         ),
@@ -98,38 +97,11 @@ class _CustomNavBarState extends State<CustomNavigationBar>
     );
   }
 
-  Widget getLargeNavBar(
-      BuildContext context,
-      List<NavigationItem> navigationItems,
-      int selectedId,
-      Function(int) callback) {
-    List<Padding> menuItems = navigationItems
-        .map(
-          (item) => Padding(
-            padding: const EdgeInsets.only(left: Constants.MENU_PADDING),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  elevation: 0, shadowColor: Colors.transparent),
-              child: item.id == selectedId
-                  ? Text(item.name,
-                      style: const TextStyle(fontWeight: FontWeight.bold))
-                  : Text(item.name),
-              onPressed: () {
-                callback(item.id);
-              },
-            ),
-          ),
-        )
-        .toList();
-
-    // Add darkmode switch
-    menuItems.add(
-      const Padding(
+  Widget getLargeNavBar(BuildContext context) {
+    return const Padding(
         padding: EdgeInsets.only(left: Constants.MENU_PADDING),
         child: ThemeSwitchWidget(),
-      ),
-    );
-    return Row(children: menuItems);
+      );
   }
 
   void toggleicon() => setState(() {

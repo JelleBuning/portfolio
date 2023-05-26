@@ -2,10 +2,10 @@
 
 class Constants {
   // PADDING
-  static const double OUTSIDE_PADDING = 25.0;
+  static const double OUTSIDE_PADDING = 50.0;
   static const double STATUSBAR_PADDING = 0;
   static const double APPBAR_PREFERRED_SIZE = 60;
-  static const double APPBAR_BOTTOM_PADDING = 0;
+  static const double APPBAR_BOTTOM_PADDING = 5;
   static const double MENU_PADDING = 20;
 
   // ----

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_portfolio/model/navigation_item.dart';
-import 'package:flutter_portfolio/pages/about.dart';
 import 'package:flutter_portfolio/pages/home.dart';
 import 'package:flutter_portfolio/util/theme_provider.dart';
-import 'package:flutter_portfolio/widgets/navigation_bar.dart';
 import 'package:flutter_portfolio/widgets/mobile_menu.dart';
+import 'package:flutter_portfolio/widgets/navigation_bar.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -23,7 +22,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   bool mobileMenuOpen = false;
   List<NavigationItem> navigationItems = [
     NavigationItem(0, "Home", const HomePage()),
-    NavigationItem(1, "About", const AboutPage()),
+    NavigationItem(1, "About", const HomePage()),
   ];
 
   @override
@@ -60,13 +59,8 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                     ),
                     body: Stack(
                       children: [
-                        Container(
-                          color: Theme.of(context).colorScheme.primary,
-                          height: double.infinity,
-                          width: double.infinity,
-                          child: getPage(selectedPage),
-                        ),
-                        // Small menu panel
+                        const HomePage(),
+                        // mobile menu
                         AnimatedContainer(
                           color: Theme.of(context).primaryColorLight,
                           alignment: Alignment.topCenter,
@@ -96,9 +90,4 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         },
       );
 
-  Widget getPage(int id) {
-    var selectedPage =
-        navigationItems.firstWhere((element) => element.id == id);
-    return selectedPage.widget;
-  }
 }

@@ -59,6 +59,8 @@ class _ContactCardState extends State<ContactCard> {
                       asset: 'images/location.svg',
                       title: 'Location',
                       description: 'Netherlands, Winerswijk',
+                      uri: Uri.parse(
+                          'https://www.google.com/maps/place/Winterswijk/@51.9710562,6.6776237,13z/data=!3m1!4b1!4m6!3m5!1s0x47b865333798aecf:0x8e58628fb931e166!8m2!3d51.9713139!4d6.720509!16s%2Fg%2F1yh7_r_wc?entry=ttu&g_ep=EgoyMDI1MDIwMi4wIKXMDSoASAFQAw%3D%3D'),
                     ),
                   ],
                 ),

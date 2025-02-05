@@ -56,9 +56,9 @@ class _ContentState extends State<Content> {
               borderRadius: BorderRadius.all(Radius.circular(50))),
         ),
         Text(
-          '''Highly proficient .NET developer specializing in the design and development of scalable and performant web services. Deep understanding of RESTful API architecture and experience integrating with diverse data sources.
+          '''A passionate .NET developer with expertise in building robust web applications, RESTful APIs, and scalable backend solutions. Skilled in crafting efficient business logic and optimizing performance. Enthusiastic about front-end technologies and delivering seamless, intuitive user interfaces.
 
-Skilled in implementing robust business logic and optimizing application performance.  Collaborates effectively with front-end developers to deliver seamless user experiences.  Continuously expands knowledge of the latest .NET technologies and best practices.''',
+Experienced in troubleshooting and maintaining high-quality, responsive applications. Continuously exploring advancements in .NET technologies and best practices to develop efficient, innovative solutions for modern software needs.''',
           style: TextStyle(
             color: Theme.of(context).colorScheme.onPrimary.withAlpha(225),
             fontWeight: FontWeight.w300,

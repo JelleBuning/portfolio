@@ -106,7 +106,7 @@ class _ContactCardState extends State<ContactCard> {
           axis: FlipAxis.vertical,
           controller: controller,
           frontWidget: AvatarCard(
-            child: Image.asset('/images/memoji.png'),
+            child: Image.asset('images/memoji.png'),
           ),
           backWidget: AvatarCard(
             child: ShaderMask(
@@ -126,7 +126,7 @@ class _ContactCardState extends State<ContactCard> {
               blendMode: BlendMode.dstIn,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(5, 10, 5, 5),
-                child: Image.asset('/images/me.png'),
+                child: Image.asset('images/me.png'),
               ),
             ),
           ),

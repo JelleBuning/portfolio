@@ -20,46 +20,49 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Column(
-            spacing: 10,
-            children: [
-              header(),
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  var isMobile = constraints.maxWidth <= 1050;
-                  if (isMobile) {
-                    // mobile layout
-                    return Column(
-                      spacing: 20,
-                      children: [
-                        ContactCard(isMobile: isMobile),
-                        Content(isMobile: isMobile),
-                      ],
+      body: RefreshIndicator(
+        onRefresh: () => Future.delayed(Duration(seconds: 1)),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Column(
+              spacing: 10,
+              children: [
+                header(),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    var isMobile = constraints.maxWidth <= 1050;
+                    if (isMobile) {
+                      // mobile layout
+                      return Column(
+                        spacing: 20,
+                        children: [
+                          ContactCard(isMobile: isMobile),
+                          Content(isMobile: isMobile),
+                        ],
+                      );
+                    }
+                    // tablet/desktop layout
+                    return ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: 1200),
+                      child: Row(
+                        spacing: 40,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ContactCard(
+                            isMobile: isMobile,
+                          ),
+                          Expanded(
+                            child: Content(isMobile: isMobile),
+                          ),
+                        ],
+                      ),
                     );
-                  }
-                  // tablet/desktop layout
-                  return ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 1200),
-                    child: Row(
-                      spacing: 40,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ContactCard(
-                          isMobile: isMobile,
-                        ),
-                        Expanded(
-                          child: Content(isMobile: isMobile),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

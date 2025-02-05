@@ -20,55 +20,44 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              toolbarHeight: 90,
-              floating: true,
-              pinned: false,
-              flexibleSpace: header(),
-            ),
-          ];
-        },
-        body: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
+            spacing: 10,
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    var isMobile = constraints.maxWidth <= 1050;
-                    if (isMobile) {
-                      // mobile layout
-                      return Column(
-                        spacing: 20,
-                        children: [
-                          ContactCard(isMobile: isMobile),
-                          Content(isMobile: isMobile),
-                        ],
-                      );
-                    }
-
-                    // tablet/desktop layout
-                    return ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 1200),
-                      child: Row(
-                        spacing: 40,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ContactCard(
-                            isMobile: isMobile,
-                          ),
-                          Expanded(
-                            child: Content(isMobile: isMobile),
-                          ),
-                        ],
-                      ),
+              header(),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  var isMobile = constraints.maxWidth <= 1050;
+                  if (isMobile) {
+                    // mobile layout
+                    return Column(
+                      spacing: 20,
+                      children: [
+                        ContactCard(isMobile: isMobile),
+                        Content(isMobile: isMobile),
+                      ],
                     );
-                  },
-                ),
+                  }
+                  // tablet/desktop layout
+                  return ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 1200),
+                    child: Row(
+                      spacing: 40,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ContactCard(
+                          isMobile: isMobile,
+                        ),
+                        Expanded(
+                          child: Content(isMobile: isMobile),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -80,26 +69,23 @@ class _HomePageState extends State<HomePage> {
   Align header() {
     return Align(
       alignment: Alignment.topRight,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              width: 35,
-              'images/logo.svg',
-              semanticsLabel: 'Logo',
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            width: 35,
+            'images/logo.svg',
+            semanticsLabel: 'Logo',
+          ),
+          TextButton(
+            style: FilledButton.styleFrom(
+              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
             ),
-            TextButton(
-              style: FilledButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-              ),
-              child: Text('support'),
-              onPressed: () async => await _launchUrl(Uri.parse('download')),
-            ),
-          ],
-        ),
+            child: Text('support'),
+            onPressed: () async => await _launchUrl(Uri.parse('download')),
+          ),
+        ],
       ),
     );
   }

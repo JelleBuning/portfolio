@@ -53,7 +53,7 @@ class _ContactCardState extends State<ContactCard> {
                       asset: 'images/mail.svg',
                       title: 'Email',
                       description: 'jellebuning@outlook.com',
-                      uri: Uri.parse('mailto://jellebuning@outlook.com'),
+                      uri: Uri.parse('mailto:jellebuning@outlook.com'),
                     ),
                     UrlInformation(
                       asset: 'images/location.svg',

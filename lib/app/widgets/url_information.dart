@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/app/widgets/icon_url.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UrlInformation extends StatelessWidget {
   const UrlInformation({
@@ -51,12 +52,26 @@ class UrlInformation extends StatelessWidget {
                     fontWeight: FontWeight.w300,
                   ),
                 ),
-                Text(description),
+                descriptionWidget(description),
               ],
             ),
           ],
         ),
       ),
     );
+  }
+
+  descriptionWidget(String description) {
+    return uri == null
+        ? Text(description)
+        : InkWell(
+            highlightColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            splashFactory: null,
+            onTap: () => uri != null ? launchUrl(uri!) : null,
+            hoverColor: Colors.transparent,
+            child: Text(description),
+          );
   }
 }

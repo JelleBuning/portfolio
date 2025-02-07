@@ -69,7 +69,9 @@ class UrlInformation extends StatelessWidget {
             focusColor: Colors.transparent,
             splashColor: Colors.transparent,
             splashFactory: null,
-            onTap: () => uri != null ? launchUrl(uri!) : null,
+            onTap: () => uri != null
+                ? launchUrl(uri!, webOnlyWindowName: '_self')
+                : null,
             hoverColor: Colors.transparent,
             child: Text(description),
           );

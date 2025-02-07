@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:portfolio/app/contact_card.dart';
 import 'package:portfolio/app/content.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -73,14 +72,9 @@ class _HomePageState extends State<HomePage> {
     return Align(
       alignment: Alignment.topRight,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SvgPicture.asset(
-            width: 35,
-            'images/logo.svg',
-            semanticsLabel: 'Logo',
-          ),
           TextButton(
             style: FilledButton.styleFrom(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),

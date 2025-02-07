@@ -7,12 +7,14 @@ class IconUrl extends StatefulWidget {
     super.key,
     required this.asset,
     this.uri,
+    this.newTab = true,
     this.color,
     this.hoverColor,
     this.size = 20,
   });
 
   final Uri? uri;
+  final bool newTab;
   final String asset;
   final double size;
   final Color? color;
@@ -34,7 +36,10 @@ class _IconUrlState extends State<IconUrl> {
             focusColor: Colors.transparent,
             splashColor: Colors.transparent,
             splashFactory: null,
-            onTap: () => launchUrl(widget.uri!),
+            onTap: () => launchUrl(
+              widget.uri!,
+              webOnlyWindowName: widget.newTab ? '_blank' : '_self',
+            ),
             hoverColor: Colors.transparent,
             onHover: (value) {
               setState(() {

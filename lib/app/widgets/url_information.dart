@@ -9,12 +9,14 @@ class UrlInformation extends StatelessWidget {
     required this.title,
     required this.description,
     this.uri,
+    this.newTab = true,
   });
 
   final String asset;
   final String title;
   final String description;
   final Uri? uri;
+  final bool newTab;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class UrlInformation extends StatelessWidget {
                   child: IconUrl(
                     asset: asset,
                     color: Theme.of(context).colorScheme.primary,
+                    newTab: newTab,
                     uri: uri,
                   )),
             ),
@@ -70,7 +73,8 @@ class UrlInformation extends StatelessWidget {
             splashColor: Colors.transparent,
             splashFactory: null,
             onTap: () => uri != null
-                ? launchUrl(uri!, webOnlyWindowName: '_self')
+                ? launchUrl(uri!,
+                    webOnlyWindowName: newTab ? '_blank' : '_self')
                 : null,
             hoverColor: Colors.transparent,
             child: Text(description),

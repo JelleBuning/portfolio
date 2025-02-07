@@ -21,7 +21,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
-        onRefresh: () => Future.delayed(Duration(seconds: 1)),
+        onRefresh: () =>
+            Future.delayed(Duration(seconds: 1), () => setState(() {})),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

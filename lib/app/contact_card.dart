@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_flip_card/controllers/flip_card_controllers.dart';
-import 'package:flutter_flip_card/flipcard/flip_card.dart';
-import 'package:flutter_flip_card/modal/flip_side.dart';
 import 'package:portfolio/app/widgets/avatar_card.dart';
 import 'package:portfolio/app/widgets/icon_url.dart';
 import 'package:portfolio/app/widgets/url_information.dart';
@@ -19,8 +16,6 @@ class ContactCard extends StatefulWidget {
 }
 
 class _ContactCardState extends State<ContactCard> {
-  final controller = FlipCardController();
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -54,6 +49,7 @@ class _ContactCardState extends State<ContactCard> {
                       title: 'Email',
                       description: 'jellebuning@outlook.com',
                       uri: Uri.parse('mailto:jellebuning@outlook.com'),
+                      newTab: false,
                     ),
                     UrlInformation(
                       asset: 'images/location.svg',
@@ -102,34 +98,25 @@ class _ContactCardState extends State<ContactCard> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        FlipCard(
-          rotateSide: RotateSide.left,
-          onTapFlipping: true,
-          axis: FlipAxis.vertical,
-          controller: controller,
-          frontWidget: AvatarCard(
-            child: Image.asset('images/memoji.png'),
-          ),
-          backWidget: AvatarCard(
-            child: ShaderMask(
-              shaderCallback: (rect) {
-                return LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black,
-                    Colors.black,
-                    Colors.black,
-                    Colors.black,
-                    Colors.transparent,
-                  ],
-                ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
-              },
-              blendMode: BlendMode.dstIn,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(5, 10, 5, 5),
-                child: Image.asset('images/me.png'),
-              ),
+        AvatarCard(
+          child: ShaderMask(
+            shaderCallback: (rect) {
+              return LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black,
+                  Colors.black,
+                  Colors.black,
+                  const Color.fromARGB(186, 0, 0, 0),
+                  Colors.transparent,
+                ],
+              ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
+            },
+            blendMode: BlendMode.dstIn,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(2.5, 5, 2.5, 2.5),
+              child: Image.asset('images/me.png'),
             ),
           ),
         ),

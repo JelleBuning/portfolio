@@ -1,12 +1,9 @@
-name: Web Release
-
+name: Web release
 on:
   push:
     branches:  [ "main" ]
-
   pull_request:
     branches: [ "main" ]
-
   workflow_dispatch:
 
 jobs:

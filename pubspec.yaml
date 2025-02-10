@@ -46,12 +46,12 @@ flutter:
         style: italic
       - asset: fonts/Poppins-ExtraLight.ttf
         weight: 200
-      - asset: fonts/Poppins-ExtraLightitalic.ttf
+      - asset: fonts/Poppins-ExtraLightItalic.ttf
         weight: 200
         style: italic
       - asset: fonts/Poppins-Light.ttf
         weight: 300
-      - asset: fonts/Poppins-Lightitalic.ttf
+      - asset: fonts/Poppins-LightItalic.ttf
         weight: 300
         style: italic
       - asset: fonts/Poppins-Regular.ttf
@@ -60,7 +60,7 @@ flutter:
         style: italic
       - asset: fonts/Poppins-Medium.ttf
         weight: 500
-      - asset: fonts/Poppins-Mediumitalic.ttf
+      - asset: fonts/Poppins-MediumItalic.ttf
         weight: 500
         style: italic
       - asset: fonts/Poppins-SemiBold.ttf

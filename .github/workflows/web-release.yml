@@ -2,16 +2,16 @@ name: Web Release
 
 on:
   push:
-    branches:  [ "master" ]
+    branches:  [ "main" ]
 
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
   workflow_dispatch:
 
 jobs:
   build:
-    name: Create Web Build
+    name: Create web build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -29,22 +29,22 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Start Web Release Build
+      - name: Start web release build
         run: flutter build web --release
      
-      - name: Upload Web Build Files
+      - name: Upload web build files
         uses: actions/upload-artifact@v4
         with:
           name: web-release
           path: ./build/web
 
   deploy:
-    name: Deploy Web Build
+    name: Deploy web build
     needs: build
     runs-on: ubuntu-latest
 
     steps:
-    - name: Download Web Release
+    - name: Download web release
       uses: actions/download-artifact@v4
       with:
         name: web-release

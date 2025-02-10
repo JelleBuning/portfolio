@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
             style: FilledButton.styleFrom(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
             ),
-            child: Text('support'),
+            child: Text('help'),
             onPressed: () async => await _launchUrl(Uri.parse('download')),
           ),
         ],

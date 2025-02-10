@@ -63199,7 +63199,7 @@ A.KV.prototype={
 S(a){var s=null,r=window.navigator.userAgent.toLowerCase(),q=B.d.A(r,"windows")||B.d.A(r,"win32")||B.d.A(r,"win64")||B.d.A(r,"wow64")?this.a3x():new A.le(0,0,s,s)
 return new A.wg(new A.vS(A.ajL(new A.c8(B.CJ,A.j0(A.a([q,new A.Eb(new A.a8k(),s)],t.E),B.ab,B.a0,10),s),B.bO),new A.a8l(this),s),s)},
 a3x(){var s=null
-return new A.kf(B.wv,s,s,A.pL(A.a([new A.HK(new A.a8m(this),s,s,s,A.ase(new A.b4(25,20,25,20)),s,s,!1,s,!0,A.iB("support",s),s)],t.E),B.ab,B.pD,B.aP,0),s)},
+return new A.kf(B.wv,s,s,A.pL(A.a([new A.HK(new A.a8m(this),s,s,s,A.ase(new A.b4(25,20,25,20)),s,s,!1,s,!0,A.iB("help",s),s)],t.E),B.ab,B.pD,B.aP,0),s)},
 qp(a){return this.Wd(a)},
 Wd(a){var s=0,r=A.U(t.H)
 var $async$qp=A.V(function(b,c){if(b===1)return A.R(c,r)

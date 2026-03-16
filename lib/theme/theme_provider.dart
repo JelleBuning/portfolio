@@ -18,7 +18,7 @@ class ThemeProvider {
       onError: Colors.white,
     ),
     iconTheme: IconThemeData(color: accentColor),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: Color.fromARGB(255, 30, 30, 31),
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
@@ -49,7 +49,7 @@ class ThemeProvider {
       error: Colors.red,
       onError: Colors.white,
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: Colors.white,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(

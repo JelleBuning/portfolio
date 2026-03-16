@@ -1,0 +1,29 @@
+name: Web release
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    uses: ./.github/workflows/build-web.yml
+
+  deploy:
+    name: Deploy to gh-pages
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download web build files
+        uses: actions/download-artifact@v4
+        with:
+          name: web-release
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./

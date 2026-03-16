@@ -1,0 +1,24 @@
+name: Build web
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    name: Build web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Build web
+        run: flutter build web --release --base-href "/portfolio/"
+
+      - name: Upload web build files
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-release
+          path: ./build/web

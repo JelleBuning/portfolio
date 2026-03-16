@@ -1,4 +1,4 @@
-import 'dart:html' as html; // ignore: avoid_web_libraries_in_flutter
+import 'package:web/web.dart' as web;
 import 'package:flutter/material.dart';
 import 'package:portfolio/app/contact_card.dart';
 import 'package:portfolio/app/content.dart';
@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool isWindowsClient() {
-    String userAgent = html.window.navigator.userAgent.toLowerCase();
+    String userAgent = web.window.navigator.userAgent.toLowerCase();
     return userAgent.contains('windows') ||
         userAgent.contains('win32') ||
         userAgent.contains('win64') ||

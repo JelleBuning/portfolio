@@ -64,7 +64,7 @@ class UrlInformation extends StatelessWidget {
     );
   }
 
-  descriptionWidget(String description) {
+  Widget descriptionWidget(String description) {
     return uri == null
         ? Text(description)
         : InkWell(

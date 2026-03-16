@@ -116,7 +116,10 @@ class _ContactCardState extends State<ContactCard> {
             blendMode: BlendMode.dstIn,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(2.5, 5, 2.5, 2.5),
-              child: Image.asset('images/me.png'),
+              child: Image.asset(
+                'images/me.png',
+                filterQuality: FilterQuality.high,
+              ),
             ),
           ),
         ),

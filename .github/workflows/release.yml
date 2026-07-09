@@ -21,6 +21,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: web-release
+          path: ./
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
